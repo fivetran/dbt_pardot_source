@@ -1,0 +1,11 @@
+version: 2
+
+sources:
+  - name: pardot
+    schema: "{{ var('pardot_schema', 'pardot') }}"
+    database: "{{ var('pardot_database', target.database) }}"
+    loader: Fivetran
+    loaded_at_field: _fivetran_synced
+
+    tables:
+      - name: list
