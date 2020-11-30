@@ -22,8 +22,17 @@ fields as (
 final as (
     
     select 
-        id as list_id
+        id as list_id,
+        name,
+        description,
+        title,
+        is_crm_visible,
+        is_public,
+        is_dynamic,
+        created_at as created_timestamp,
+        updated_at as updated_timestmap
     from fields
+
 )
 
 select * from final

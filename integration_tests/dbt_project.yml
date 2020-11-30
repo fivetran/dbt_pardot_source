@@ -1,0 +1,15 @@
+name: 'pardot_source_integration_tests'
+version: '1.0.0'
+profile: 'integration_tests'
+config-version: 2
+
+vars:
+  pardot_source:
+    list: "{{ ref('pardot_list_data') }}"
+    list_membership: "{{ ref('pardot_list_membership_data') }}"
+    visitor: "{{ ref('pardot_visitor_data') }}"
+    visitor_activity: "{{ ref('pardot_visitor_activity_data') }}"
+    prospect: "{{ ref('pardot_prospect_data') }}"
+    campaign: "{{ ref('pardot_campaign_data') }}"
+    opportunity: "{{ ref('pardot_opportunity_data') }}"
+    opportunity_prospect: "{{ ref('pardot_opportunity_prospect_data') }}"

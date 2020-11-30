@@ -9,3 +9,10 @@ sources:
 
     tables:
       - name: list
+      - name: list_membership
+      - name: prospect
+      - name: visitor
+      - name: visitor_activity
+      - name: opportunity
+      - name: opportunity_prospect
+      - name: campaign
