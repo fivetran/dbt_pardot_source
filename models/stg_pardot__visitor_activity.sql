@@ -22,6 +22,7 @@ fields as (
 final as (
     
     select 
+        id as visitor_activity_id,
         type_name as event_type_name,
         prospect_id,
         visitor_id,

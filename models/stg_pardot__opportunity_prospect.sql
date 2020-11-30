@@ -24,7 +24,8 @@ final as (
     select 
         opportunity_id,
         prospect_id,
-        updated_at as updated_timestamp
+        updated_at as updated_timestamp,
+        {{ dbt_utils.surrogate_key(['opportunity_id','prospect_id']) }} as opportunity_prospect_id
     from fields
     
 )

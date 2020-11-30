@@ -1,0 +1,52 @@
+version: 2
+
+models:
+
+  - name: stg_pardot__list
+    columns:
+      - name: list_id
+        tests:
+          - unique
+          - not_null
+  - name: stg_pardot__list_membership
+    columns:
+      - name: list_membership_id
+        tests:
+          - unique
+          - not_null
+  - name: stg_pardot__visitor
+    columns:
+      - name: visitor_id
+        tests:
+          - unique
+          - not_null
+  - name: stg_pardot__visitor_activity
+    columns:
+      - name: visitor_activity_id
+        tests:
+          - unique
+          - not_null
+  - name: stg_pardot__prospect
+    columns:
+      - name: prospect_id
+        tests:
+          - unique
+          - not_null
+  - name: stg_pardot__campaign
+    columns:
+      - name: campaign_id
+        tests:
+          - unique
+          - not_null
+  - name: stg_pardot__opportunity
+    columns:
+      - name: opportunity_id
+        tests:
+          - unique
+          - not_null
+  - name: stg_pardot__opportunity_prospect
+    columns:
+      - name: opportunity_prospect_id
+        tests:
+          - unique
+          - not_null
