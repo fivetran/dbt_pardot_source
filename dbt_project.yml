@@ -13,3 +13,4 @@ vars:
     campaign: "{{ source('pardot','campaign') }}"
     opportunity: "{{ source('pardot','opportunity') }}"
     opportunity_prospect: "{{ source('pardot','opportunity_prospect') }}"
+    prospect_passthrough_columns: []

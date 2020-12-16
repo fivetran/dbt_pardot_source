@@ -15,6 +15,10 @@ fields as (
                 staging_columns=get_prospect_columns()
             )
         }}
+
+        {% if var('prospect_passthrough_columns') %}
+        , {{ var('prospect_passthrough_columns')|join(',') }}
+        {% endif %}
         
     from base
 ),
@@ -27,6 +31,10 @@ final as (
         last_name,
         email,
         campaign_id
+        
+        {% if var('prospect_passthrough_columns') %}
+        , {{ var('prospect_passthrough_columns')|join(',') }}
+        {% endif %}
     from fields
 )
 

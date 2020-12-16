@@ -31,8 +31,9 @@ final as (
         status as opportunity_status,
         stage,
         type as opportunity_type,
-        value
+        value as amount
     from fields
+
 )
 
 select * from final
