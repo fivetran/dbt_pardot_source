@@ -17,6 +17,7 @@ fields as (
         }}
         
     from base
+    where _fivetran_deleted = False
 ),
 
 final as (
@@ -24,7 +25,9 @@ final as (
     select 
         id as campaign_id,
         name as campaign_name,
-        cost
+        cost,
+        _fivetran_deleted,
+        _fivetran_synced
     from fields
 )
 

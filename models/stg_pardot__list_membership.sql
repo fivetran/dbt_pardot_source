@@ -27,7 +27,8 @@ final as (
         list_id,
         created_at as created_timestamp,
         updated_at as updated_timestamp,
-        opted_out as has_opted_out
+        opted_out as has_opted_out,
+        _fivetran_synced
     from fields
 )
 

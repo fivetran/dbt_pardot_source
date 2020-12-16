@@ -30,7 +30,8 @@ final as (
         is_public,
         is_dynamic,
         created_at as created_timestamp,
-        updated_at as updated_timestmap
+        updated_at as updated_timestamp,
+        _fivetran_synced
     from fields
 
 )

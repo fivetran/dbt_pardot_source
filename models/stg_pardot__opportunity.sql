@@ -31,7 +31,8 @@ final as (
         status as opportunity_status,
         stage,
         type as opportunity_type,
-        value as amount
+        value as amount,
+        _fivetran_synced
     from fields
 
 )

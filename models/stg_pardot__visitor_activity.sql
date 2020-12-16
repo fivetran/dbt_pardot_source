@@ -26,7 +26,11 @@ final as (
         type_name as event_type_name,
         prospect_id,
         visitor_id,
-        created_at as created_timestamp
+        created_at as created_timestamp,
+        campaign_id,
+        opportunity_id,
+        _fivetran_synced,
+        email_id
     from fields
 )
 

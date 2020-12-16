@@ -21,16 +21,60 @@ fields as (
         {% endif %}
         
     from base
+    where _fivetran_deleted = False
 ),
 
 final as (
     
     select 
         id as prospect_id,
-        first_name,
-        last_name,
+        _fivetran_deleted,
+        _fivetran_synced,
+        address_one,
+        address_two,
+        annual_revenue,
+        campaign_id,
+        city,
+        comments,
+        company,
+        country,
+        created_at as created_timestamp,
+        crm_account_fid,
+        crm_contact_fid,
+        crm_last_sync,
+        crm_lead_fid,
+        crm_owner_fid,
+        crm_url,
+        department,
         email,
-        campaign_id
+        employees,
+        fax,
+        first_name,
+        grade,
+        industry,
+        is_do_not_call,
+        is_do_not_email,
+        is_reviewed,
+        is_starred,
+        job_title,
+        last_activity_at,
+        last_name,
+        notes,
+        opted_out,
+        password,
+        phone as phone_number,
+        prospect_account_id,
+        recent_interaction,
+        salutation,
+        score,
+        source as prospect_source,
+        state as prospect_state,
+        territory,
+        updated_at as updated_timestamp,
+        user_id,
+        website,
+        years_in_business,
+        zip
         
         {% if var('prospect_passthrough_columns') %}
         , {{ var('prospect_passthrough_columns')|join(',') }}
