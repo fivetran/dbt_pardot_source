@@ -32,7 +32,8 @@ final as (
         stage,
         type as opportunity_type,
         value as amount,
-        _fivetran_synced
+        _fivetran_synced,
+        closed_at as closed_timestamp
     from fields
 
 )

@@ -68,7 +68,7 @@ final as (
         salutation,
         score,
         source as prospect_source,
-        state as prospect_state,
+        state,
         territory,
         updated_at as updated_timestamp,
         user_id,

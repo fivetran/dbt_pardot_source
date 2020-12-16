@@ -3,50 +3,269 @@ version: 2
 models:
 
   - name: stg_pardot__list
+    description: Each record represents a list in Pardot.
     columns:
+      - name: _fivetran_synced
+        description:  "{{ doc('_fivetran_synced') }}"
+      - name: created_timestamp
+        description: Time list is created in Pardot.
+      - name: description
+        description: List's description
       - name: list_id
+        description: Pardot ID of this list
         tests:
           - unique
           - not_null
+      - name: is_crm_visible
+        description: If true, list is visible in CRM to add or remove from
+      - name: is_dynamic
+        description: If true, list has prospects dynamically added to it via a set of chosen rules
+      - name: is_public
+        description: If true, list will show on EPC pages to prospects
+      - name: name
+        description: List's name (internal to Pardot)
+      - name: title
+        description: List's title (visible to subscribers)
+      - name: updated_timestamp
+        description: Last time list was updated
+
   - name: stg_pardot__list_membership
+    description: Every record represents membership of a prospect in a list.
     columns:
+      - name: _fivetran_synced
+        description: "{{ doc('_fivetran_synced') }}"
+      - name: created_timestamp
+        description: Time that this membership is created in Pardot
       - name: list_membership_id
+        description: Pardot ID for this list membership
         tests:
           - unique
           - not_null
-  - name: stg_pardot__visitor
-    columns:
-      - name: visitor_id
-        tests:
-          - unique
-          - not_null
-  - name: stg_pardot__visitor_activity
-    columns:
-      - name: visitor_activity_id
-        tests:
-          - unique
-          - not_null
-  - name: stg_pardot__prospect
-    columns:
+      - name: list_id
+        description: TPardot ID of the list for this membershipBD
+      - name: has_opted_out
+        description: If value is 1, the prospect is unsubscribed from receiving emails from this list
       - name: prospect_id
+        description: Pardot ID of the prospect for this membership
+      - name: updated_timestamp
+        description: Last time that this membership was updated
+
+  - name: stg_pardot__visitor
+    description: Each record represents a website visitor.
+    columns:
+      - name: _fivetran_synced
+        description: "{{ doc('_fivetran_synced') }}"
+      - name: visitor_id
+        description: Pardot ID for this visitor
         tests:
           - unique
           - not_null
-  - name: stg_pardot__campaign
+      - name: page_view_count
+        description: Number of page views by this visitor
+      - name: ip_address
+        description: Visitor's IP address
+      - name: hostname
+        description: Visitor's hostname
+      - name: utm_campaign
+        description: Visitor's campaign parameter utm_campaign from Google Analytics
+      - name: utm_medium
+        description: Visitor's medium parameter utm_medium from Google Analytics
+      - name: utm_source
+        description: Visitor's source parameter utm_source from Google Analytics
+      - name: utm_content
+        description: Visitor's content parameter utm_content from Google Analytics
+      - name: utm_term
+        description: Visitor's term parameter utm_term from Google Analytics
+      - name: created_timestamp
+        description: Time visitor is created in Pardot; Time is reported in API user's preferred timezone
+      - name: updated_timestamp
+        description: Last time visitor was updated in Pardot; Time is reported in API user's preferred timezone
+
+  - name: stg_pardot__visitor_activity
+    description: Each record represents a visitors session on a website.
     columns:
+      - name: _fivetran_synced
+        description: "{{ doc('_fivetran_synced') }}"
+      - name: visitor_activity_id
+        description: Pardot ID for this visitor activity
+        tests:
+          - unique
+          - not_null
+      - name: prospect_id
+        description: Pardot ID for the associated prospect
+      - name: visitor_id
+        description: Pardot ID for the associated visitor
+      - name: event_type_name
+        description: Visitor activity's type name; See listing below
+      - name: email_id
+        description: Pardot ID of the email associated with this visitor activity
       - name: campaign_id
-        tests:
-          - unique
-          - not_null
-  - name: stg_pardot__opportunity
+        description: ID of the related campaign.
+      - name: created_timestamp
+        description: Time that visitor activity occurred
+
+  - name: stg_pardot__prospect
+    description: Each record in the table represents a prospect in Pardot.
     columns:
-      - name: opportunity_id
+      - name: _fivetran_deleted
+        description: "{{ doc('_fivetran_deleted') }}"
+      - name: _fivetran_synced
+        description: "{{ doc('_fivetran_synced') }}"
+      - name: prospect_id
+        description: Pardot ID for this prospect
         tests:
           - unique
           - not_null
+      - name: campaign_id
+        description: Pardot ID of the campaign associated with this prospect
+      - name: salutation
+        description: Prospect's formal prefix
+      - name: first_name
+        description: Prospect's first name
+      - name: last_name
+        description: Prospect's last name
+      - name: email
+        description: Prospect's email address
+      - name: password
+        description: Prospect's password
+      - name: company
+        description: Prospect's company
+      - name: prospect_account_id
+        description: Prospect's account ID
+      - name: website
+        description: Prospect's website URL
+      - name: job_title
+        description: Prospect's job title
+      - name: department
+        description: Prospect's department
+      - name: country
+        description: Prospect's country
+      - name: address_one
+        description: Prospect's address, line 1
+      - name: address_two
+        description: Prospect's address, line 2
+      - name: city
+        description: Prospect's city
+      - name: state
+        description: Prospect's US state
+      - name: territory
+        description: Prospect's territory
+      - name: zip
+        description: Prospect's postal code
+      - name: phone_number
+        description: Prospect's phone number
+      - name: fax
+        description: Prospect's fax number
+      - name: prospect_source
+        description: Prospect's source
+      - name: annual_revenue
+        description: Prospect's annual revenue
+      - name: employees
+        description: Prospect's number of employees
+      - name: industry
+        description: Prospect's industry
+      - name: years_in_business
+        description: Prospect's number of years in business
+      - name: comments
+        description: Comments about this prospect
+      - name: notes
+        description: Notes about this prospect
+      - name: score
+        description: Prospect's score
+      - name: grade
+        description: Prospect's letter grade
+      - name: last_activity_at
+        description: Time stamp of this prospect's latest visitor activity; Time is reported in API user's preferred timezone
+      - name: recent_interaction
+        description: Describes the prospect's most recent interaction with Pardot
+      - name: crm_lead_fid
+        description: Prospect's lead ID in a supported CRM system
+      - name: crm_contact_fid
+        description: Prospect's contact ID in a supported CRM system
+      - name: crm_owner_fid
+        description: Prospect's owner ID in a supported CRM system
+      - name: crm_account_fid
+        description: Account ID in a supported CRM system
+      - name: crm_last_sync
+        description: Last time this prospect was synced with a supported CRM system
+      - name: crm_url
+        description: URL to view the prospect within the CRM system
+      - name: is_do_not_email
+        description: If value is 1, prospect prefers not to be emailed
+      - name: is_do_not_call
+        description: If value is 1, prospect prefers not to be called
+      - name: opted_out
+        description: If value is 1, prospect has opted out of marketing communications
+      - name: is_reviewed
+        description: If value is 1, prospect has been reviewed
+      - name: is_starred
+        description: If value is 1, prospect has been starred
+      - name: created_timestamp
+        description: Time prospect is created in Pardot; Time is reported in API user's preferred timezone
+      - name: updated_timestamp
+        description: Last time prospect was updated in Pardot; Time is reported in API user's preferred timezone
+
+  - name: stg_pardot__campaign
+    description: Each record represents a campaign in Pardot
+    columns:
+      - name: _fivetran_deleted
+        description: "{{ doc('_fivetran_deleted') }}"
+      - name: _fivetran_synced
+        description: "{{ doc('_fivetran_synced') }}"
+      - name: campaign_id
+        description: Pardot ID for this campaign
+        tests:
+          - unique
+          - not_null
+      - name: campaign_name
+        description: Campaign's name
+      - name: cost
+        description: Cost associated to the campaign
+
+  - name: stg_pardot__opportunity
+    description: Each record represents an opportunity in Pardot.
+    columns:
+      - name: _fivetran_synced
+        description: "{{ doc('_fivetran_synced') }}"
+      - name: opportunity_id
+        description: Pardot ID for this opportunity
+        tests:
+          - unique
+          - not_null
+      - name: campaign_id
+        description: Pardot ID of the campaign associated with this opportunity
+      - name: opportunity_name
+        description: Opportunity's name
+      - name: amount
+        description: Opportunity's value
+      - name: probability
+        description: Opportunity's probability
+      - name: opportunity_type
+        description: Opportunity's type
+      - name: stage
+        description: Opportunity's stage
+      - name: opportunity_status
+        description: Opportunity's status
+      - name: closed_timestamp
+        description: Opportunity's closed date
+      - name: created_timestamp
+        description: Time opportunity is created in Pardot
+      - name: updated_timestamp
+        description: Last time opportunity was updated in Pardot
+        
   - name: stg_pardot__opportunity_prospect
+    description: Each record represents a prospect's involvement in an opportunity in Pardot.
     columns:
       - name: opportunity_prospect_id
+        description: Primary key for the table
         tests:
           - unique
           - not_null
+      - name: _fivetran_synced
+        description: "{{ doc('_fivetran_synced') }}"
+      - name: opportunity_id
+        description: ID of the related opportunity
+      - name: prospect_id
+        description: ID of the related prospect
+      - name: updated_timestamp
+        description: Last time record was updated in Pardot

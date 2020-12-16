@@ -9,10 +9,271 @@ sources:
 
     tables:
       - name: list
+        description: Each record represents a list in Pardot.
+        columns:
+          - name: _fivetran_synced
+            description:  "{{ doc('_fivetran_synced') }}"
+          - name: created_at
+            description: Time list is created in Pardot.
+          - name: description
+            description: List's description
+          - name: id
+            description: Pardot ID of this list
+          - name: is_crm_visible
+            description: If true, list is visible in CRM to add or remove from
+          - name: is_dynamic
+            description: If true, list has prospects dynamically added to it via a set of chosen rules
+          - name: is_public
+            description: If true, list will show on EPC pages to prospects
+          - name: name
+            description: List's name (internal to Pardot)
+          - name: title
+            description: List's title (visible to subscribers)
+          - name: updated_at
+            description: Last time list was updated
+
       - name: list_membership
+        description: Every record represents membership of a prospect in a list.
+        columns:
+          - name: _fivetran_synced
+            description: "{{ doc('_fivetran_synced') }}"
+          - name: created_at
+            description: Time that this membership is created in Pardot
+          - name: id
+            description: Pardot ID for this list membership
+          - name: list_id
+            description: TPardot ID of the list for this membershipBD
+          - name: opted_out
+            description: If value is 1, the prospect is unsubscribed from receiving emails from this list
+          - name: prospect_id
+            description: Pardot ID of the prospect for this membership
+          - name: updated_at
+            description: Last time that this membership was updated
+
       - name: prospect
+        description: Each record in the table represents a prospect in Pardot.
+        columns:
+          - name: _fivetran_deleted
+            description: "{{ doc('_fivetran_deleted') }}"
+          - name: _fivetran_synced
+            description: "{{ doc('_fivetran_synced') }}"
+          - name: id
+            description: Pardot ID for this prospect
+          - name: campaign_id
+            description: Pardot ID of the campaign associated with this prospect
+          - name: salutation
+            description: Prospect's formal prefix
+          - name: first_name
+            description: Prospect's first name
+          - name: last_name
+            description: Prospect's last name
+          - name: email
+            description: Prospect's email address
+          - name: password
+            description: Prospect's password
+          - name: company
+            description: Prospect's company
+          - name: prospect_account_id
+            description: Prospect's account ID
+          - name: website
+            description: Prospect's website URL
+          - name: job_title
+            description: Prospect's job title
+          - name: department
+            description: Prospect's department
+          - name: country
+            description: Prospect's country
+          - name: address_one
+            description: Prospect's address, line 1
+          - name: address_two
+            description: Prospect's address, line 2
+          - name: city
+            description: Prospect's city
+          - name: state
+            description: Prospect's US state
+          - name: territory
+            description: Prospect's territory
+          - name: zip
+            description: Prospect's postal code
+          - name: phone
+            description: Prospect's phone number
+          - name: fax
+            description: Prospect's fax number
+          - name: source
+            description: Prospect's source
+          - name: annual_revenue
+            description: Prospect's annual revenue
+          - name: employees
+            description: Prospect's number of employees
+          - name: industry
+            description: Prospect's industry
+          - name: years_in_business
+            description: Prospect's number of years in business
+          - name: comments
+            description: Comments about this prospect
+          - name: notes
+            description: Notes about this prospect
+          - name: score
+            description: Prospect's score
+          - name: grade
+            description: Prospect's letter grade
+          - name: last_activity_at
+            description: Time stamp of this prospect's latest visitor activity; Time is reported in API user's preferred timezone
+          - name: recent_interaction
+            description: Describes the prospect's most recent interaction with Pardot
+          - name: crm_lead_fid
+            description: Prospect's lead ID in a supported CRM system
+          - name: crm_contact_fid
+            description: Prospect's contact ID in a supported CRM system
+          - name: crm_owner_fid
+            description: Prospect's owner ID in a supported CRM system
+          - name: crm_account_fid
+            description: Account ID in a supported CRM system
+          - name: crm_last_sync
+            description: Last time this prospect was synced with a supported CRM system
+          - name: crm_url
+            description: URL to view the prospect within the CRM system
+          - name: is_do_not_email
+            description: If value is 1, prospect prefers not to be emailed
+          - name: is_do_not_call
+            description: If value is 1, prospect prefers not to be called
+          - name: opted_out
+            description: If value is 1, prospect has opted out of marketing communications
+          - name: is_reviewed
+            description: If value is 1, prospect has been reviewed
+          - name: is_starred
+            description: If value is 1, prospect has been starred
+          - name: is_archived
+            description: If value is 1, prospect has been archived
+          - name: created_at
+            description: Time prospect is created in Pardot; Time is reported in API user's preferred timezone
+          - name: updated_at
+            description: Last time prospect was updated in Pardot; Time is reported in API user's preferred timezone
+
       - name: visitor
+        description: Each record represents a website visitor.
+        columns:
+          - name: _fivetran_synced
+            description: "{{ doc('_fivetran_synced') }}"
+          - name: id
+            description: Pardot ID for this visitor
+          - name: page_view_count
+            description: Number of page views by this visitor
+          - name: ip_address
+            description: Visitor's IP address
+          - name: hostname
+            description: Visitor's hostname
+          - name: campaign_parameter
+            description: Visitor's campaign parameter utm_campaign from Google Analytics
+          - name: medium_parameter
+            description: Visitor's medium parameter utm_medium from Google Analytics
+          - name: source_parameter
+            description: Visitor's source parameter utm_source from Google Analytics
+          - name: content_parameter
+            description: Visitor's content parameter utm_content from Google Analytics
+          - name: term_parameter
+            description: Visitor's term parameter utm_term from Google Analytics
+          - name: created_at
+            description: Time visitor is created in Pardot; Time is reported in API user's preferred timezone
+          - name: updated_at
+            description: Last time visitor was updated in Pardot; Time is reported in API user's preferred timezone
+
       - name: visitor_activity
+        description: Each record represents a visitors session on a website.
+        columns:
+          - name: _fivetran_synced
+            description: "{{ doc('_fivetran_synced') }}"
+          - name: id
+            description: Pardot ID for this visitor activity
+          - name: prospect_id
+            description: Pardot ID for the associated prospect
+          - name: visitor_id
+            description: Pardot ID for the associated visitor
+          - name: type
+            description: Visitor activity's type number; See listing below
+          - name: type_name
+            description: Visitor activity's type name; See listing below
+          - name: details
+            description: Details about this visitor activity such as the name of the object associated with this activity, the search phrase used in a site search query, etc.
+          - name: email_id
+            description: Pardot ID of the email associated with this visitor activity
+          - name: email_template_id
+            description: Pardot ID of the email template associated with this visitor activity
+          - name: list_email_id
+            description: Pardot ID of the list email associated with this visitor activity
+          - name: form_id
+            description: Pardot ID of the form associated with this visitor activity
+          - name: form_handler_id
+            description: Pardot ID of the form handler associated with this visitor activity
+          - name: site_search_query_id
+            description: Pardot ID of the site search query associated with this visitor activity
+          - name: landing_page_id
+            description: Pardot ID of the landing page associated with this visitor activity
+          - name: paid_search_ad_id
+            description: Pardot ID of the paid search ad associated with this visitor activity
+          - name: multivariate_test_variation_id
+            description: Pardot ID of the multivariate test variation associated with this visitor activity
+          - name: visitor_page_view_id
+            description: Pardot ID of the visitor page view associated with this visitoractivity
+          - name: file_id
+            description: Pardot ID of the file associated with this visitor activity
+          - name: custom_redirect_id
+            description: Pardot ID of the custom redirect associated with this visitor activity
+          - name: campaign_id
+            description: ID of the related campaign.
+          - name: created_at
+            description: Time that visitor activity occurred
+
       - name: opportunity
+        description: Each record represents an opportunity in Pardot.
+        columns:
+          - name: _fivetran_synced
+            description: "{{ doc('_fivetran_synced') }}"
+          - name: id
+            description: Pardot ID for this opportunity
+          - name: campaign_id
+            description: Pardot ID of the campaign associated with this opportunity
+          - name: name
+            description: Opportunity's name
+          - name: value
+            description: Opportunity's value
+          - name: probability
+            description: Opportunity's probability
+          - name: type
+            description: Opportunity's type
+          - name: stage
+            description: Opportunity's stage
+          - name: status
+            description: Opportunity's status
+          - name: closed_at
+            description: Opportunity's closed date
+          - name: created_at
+            description: Time opportunity is created in Pardot
+          - name: updated_at
+            description: Last time opportunity was updated in Pardot
+
       - name: opportunity_prospect
+        description: Each record represents a prospect's involvement in an opportunity in Pardot.
+        columns:
+          - name: _fivetran_synced
+            description: "{{ doc('_fivetran_synced') }}"
+          - name: opportunity_id
+            description: ID of the related opportunity
+          - name: prospect_id
+            description: ID of the related prospect
+          - name: updated_at
+            description: Last time record was updated in Pardot
+
       - name: campaign
+        description: Each record represents a campaign in Pardot
+        columns:
+          - name: _fivetran_deleted
+            description: "{{ doc('_fivetran_deleted') }}"
+          - name: _fivetran_synced
+            description: "{{ doc('_fivetran_synced') }}"
+          - name: id
+            description: Pardot ID for this campaign
+          - name: name
+            description: Campaign's name
+          - name: cost
+            description: Cost associated to the campaign
