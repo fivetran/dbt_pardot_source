@@ -1,6 +1,6 @@
 # Pardot (Source)
 
-This package models Pardot data from [Fivetran's connector](https://fivetran.com/docs/applications/pardot). It uses data in the format described by [the Pardot ERD](https://docs.google.com/presentation/d/1YQquOmlb7pIMI1Tcc2Qcner4rSCI8RYdrie1DRkJzds/edit#slide=id.g244d368397_0_1).
+This package models Pardot data from [Fivetran's connector](https://fivetran.com/docs/applications/pardot). It uses data in the format described by [the Pardot ERD](https://fivetran.com/docs/applications/pardot#schemainformation).
 
 This package enriches your Fivetran data by doing the following:
 

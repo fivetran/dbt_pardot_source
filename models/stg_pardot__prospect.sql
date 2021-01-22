@@ -21,7 +21,7 @@ fields as (
         {% endif %}
         
     from base
-    where _fivetran_deleted = False
+    where not coalesce(_fivetran_deleted, false)
 ),
 
 final as (

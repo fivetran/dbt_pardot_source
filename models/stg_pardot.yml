@@ -42,7 +42,7 @@ models:
           - unique
           - not_null
       - name: list_id
-        description: TPardot ID of the list for this membershipBD
+        description: Pardot ID of the list for this membershipBD
       - name: has_opted_out
         description: If value is 1, the prospect is unsubscribed from receiving emails from this list
       - name: prospect_id
