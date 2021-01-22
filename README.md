@@ -1,4 +1,4 @@
-# Pardot (Source)
+# Pardot Source ([docs](https://fivetran-dbt-pardot.netlify.app/#!/overview))
 
 This package models Pardot data from [Fivetran's connector](https://fivetran.com/docs/applications/pardot). It uses data in the format described by [the Pardot ERD](https://fivetran.com/docs/applications/pardot#schemainformation).
 
