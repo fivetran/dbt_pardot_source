@@ -10,13 +10,13 @@ This package enriches your Fivetran data by doing the following:
 
 ## Models
 
-This package contains staging models, designed to work simultaneously with our [Pardot modeling package](https://github.com/fivetran/dbt_pardot). The staging models:
+This package contains staging models, designed to work simultaneously with our [Pardot modeling package](https://github.com/fivetran/dbt_pardot). The staging models are designed to:
 
 * Remove any rows that are soft-deleted
 * Name columns consistently across all packages:
-* Boolean fields are prefixed with `is_` or `has_`
-* Timestamps are appended with `_timestamp`
-* ID primary keys are prefixed with the name of the table. For example, the prospect table's ID column is renamed prospect.
+  * Boolean fields are prefixed with `is_` or `has_`
+  * Timestamps are appended with `_timestamp`
+  * ID primary keys are prefixed with the name of the table. For example, the prospect table's ID column is renamed `prospect_id`.
 
 ## Installation Instructions
 Check [dbt Hub](https://hub.getdbt.com/) for the latest installation instructions, or [read the dbt docs](https://docs.getdbt.com/docs/package-management) for more information on installing packages.
@@ -25,7 +25,7 @@ Check [dbt Hub](https://hub.getdbt.com/) for the latest installation instruction
 
 ### Source data location
 
-By default this package will look for your Pardot data in the `pardot` schema of your [target database](https://docs.getdbt.com/docs/running-a-dbt-project/using-the-command-line-interface/configure-your-profile). If this is not where your Pardot data is, add the following configuration to your `dbt_project.yml` file:
+By default, this package will look for your Pardot data in the `pardot` schema of your [target database](https://docs.getdbt.com/docs/running-a-dbt-project/using-the-command-line-interface/configure-your-profile). If this is not where your Pardot data is, add the following configuration to your `dbt_project.yml` file:
 
 ```yml
 # dbt_project.yml
@@ -41,7 +41,7 @@ vars:
 
 ### Passthrough Columns
 
-By default, the package includes all the standard columns in the `stg_pardot__prospect` model. If you would like to include custom columns to be included, you can configure them using the `prospect_passthrough_columns` variable:
+By default, the package includes all of the standard columns in the `stg_pardot__prospect` model. If you want to include custom columns, configure them using the `prospect_passthrough_columns` variable:
 
 ```yml
 # dbt_project.yml
