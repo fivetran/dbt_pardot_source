@@ -59,6 +59,8 @@ sources:
             description: "{{ doc('_fivetran_synced') }}"
           - name: id
             description: Pardot ID for this prospect
+          - name: user_id
+            description: Pardot ID of the user associated with this prospect
           - name: campaign_id
             description: Pardot ID of the campaign associated with this prospect
           - name: salutation
@@ -157,6 +159,8 @@ sources:
             description: "{{ doc('_fivetran_synced') }}"
           - name: id
             description: Pardot ID for this visitor
+          - name: prospect_id
+            description: Pardot ID for the associated prospect
           - name: page_view_count
             description: Number of page views by this visitor
           - name: ip_address
@@ -189,6 +193,8 @@ sources:
             description: Pardot ID for the associated prospect
           - name: visitor_id
             description: Pardot ID for the associated visitor
+          - name: opportunity_id
+            description: ID of the related opportunity
           - name: type
             description: Visitor activity's type number; See listing below
           - name: type_name
@@ -214,7 +220,7 @@ sources:
           - name: multivariate_test_variation_id
             description: Pardot ID of the multivariate test variation associated with this visitor activity
           - name: visitor_page_view_id
-            description: Pardot ID of the visitor page view associated with this visitoractivity
+            description: Pardot ID of the visitor page view associated with this visitor activity
           - name: file_id
             description: Pardot ID of the file associated with this visitor activity
           - name: custom_redirect_id

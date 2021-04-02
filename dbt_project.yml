@@ -1,16 +1,19 @@
 name: 'pardot_source'
 version: '0.2.0'
 config-version: 2
-require-dbt-version: [">=0.18.0", "<0.19.0"]
+require-dbt-version: [">=0.18.0", "<0.20.0"]
 
+models:
+  pardot_source:
+    +schema: stg_pardot
 vars:
   pardot_source:
-    list: "{{ source('pardot','list') }}"
-    list_membership: "{{ source('pardot','list_membership') }}"
-    visitor: "{{ source('pardot','visitor') }}"
-    visitor_activity: "{{ source('pardot','visitor_activity') }}"
-    prospect: "{{ source('pardot','prospect') }}"
-    campaign: "{{ source('pardot','campaign') }}"
-    opportunity: "{{ source('pardot','opportunity') }}"
+    list:                 "{{ source('pardot','list') }}"
+    list_membership:      "{{ source('pardot','list_membership') }}"
+    visitor:              "{{ source('pardot','visitor') }}"
+    visitor_activity:     "{{ source('pardot','visitor_activity') }}"
+    prospect:             "{{ source('pardot','prospect') }}"
+    campaign:             "{{ source('pardot','campaign') }}"
+    opportunity:          "{{ source('pardot','opportunity') }}"
     opportunity_prospect: "{{ source('pardot','opportunity_prospect') }}"
     prospect_passthrough_columns: []
