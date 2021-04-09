@@ -60,6 +60,8 @@ models:
         tests:
           - unique
           - not_null
+      - name: prospect_id
+        description: Pardot ID for the associated prospect
       - name: page_view_count
         description: Number of page views by this visitor
       - name: ip_address
@@ -95,6 +97,8 @@ models:
         description: Pardot ID for the associated prospect
       - name: visitor_id
         description: Pardot ID for the associated visitor
+      - name: opportunity_id
+        description: ID of the related opportunity
       - name: event_type_name
         description: Visitor activity's type name; See listing below
       - name: email_id
@@ -118,6 +122,8 @@ models:
           - not_null
       - name: campaign_id
         description: Pardot ID of the campaign associated with this prospect
+      - name: user_id
+        description: Pardot ID of the user associated with this prospect
       - name: salutation
         description: Prospect's formal prefix
       - name: first_name
