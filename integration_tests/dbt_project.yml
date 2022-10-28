@@ -3,6 +3,7 @@ version: '0.5.0'
 profile: 'integration_tests'
 config-version: 2
 vars:
+  pardot_schema: pardot_source_integration_tests
   pardot_source:
     list: "{{ ref('pardot_list_data') }}"
     list_membership: "{{ ref('pardot_list_membership_data') }}"
