@@ -10,84 +10,78 @@
         <img src="https://img.shields.io/badge/Contributions-welcome-blueviolet" /></a>
 </p>
 
-# Pardot (Source)
+# Pardot Source dbt Package ([Docs](https://fivetran.github.io/dbt_pardot_source/))
 
-This package models Pardot data from [Fivetran's connector](https://fivetran.com/docs/applications/pardot). It uses data in the format described by [the Pardot ERD](https://fivetran.com/docs/applications/pardot#schemainformation).
+# 📣 What does this dbt package do?
+- Materializes [Pardot staging tables](https://fivetran.github.io/dbt_pardot_source/#!/overview/pardot_source/models/?g_v=1) which leverage data in the format described by [this ERD](https://fivetran.com/docs/applications/pardot/#schemainformation). These staging tables clean, test, and prepare your Pardot data from [Fivetran's connector](https://fivetran.com/docs/applications/pardot) for analysis by doing the following:
+  - Name columns for consistency across all packages and for easier analysis
+  - Adds freshness tests to source data
+  - Adds column-level testing where applicable. For example, all primary keys are tested for uniqueness and non-null values.
+- Generates a comprehensive data dictionary of your Pardot data through the [dbt docs site](https://fivetran.github.io/dbt_pardot_source/).
+- These tables are designed to work simultaneously with our [Pardot transformation package](https://github.com/fivetran/dbt_pardot).
 
-This package enriches your Fivetran data by doing the following:
+# 🎯 How do I use the dbt package?
+## Step 1: Prerequisites
+To use this dbt package, you must have the following:
+- At least one Fivetran Pardot connector syncing data into your destination. 
+- A **BigQuery**, **Snowflake**, **Redshift**, or **PostgreSQL** destination.
 
-* Adds descriptions to tables and columns that are synced using Fivetran
-* Adds column-level testing where applicable. For example, all primary keys are tested for uniqueness and non-null values.
-* Models staging tables, which will be used in our transform package
-
-## Models
-
-This package contains staging models, designed to work simultaneously with our [Pardot transformation package](https://github.com/fivetran/dbt_pardot). The staging models are designed to:
-
-* Remove any rows that are soft-deleted
-* Name columns consistently across all packages:
-  * Boolean fields are prefixed with `is_` or `has_`
-  * Timestamps are appended with `_timestamp`
-  * ID primary keys are prefixed with the name of the table. For example, the prospect table's ID column is renamed `prospect_id`.
-
-## Installation Instructions
-Check [dbt Hub](https://hub.getdbt.com/) for the latest installation instructions, or [read the dbt docs](https://docs.getdbt.com/docs/package-management) for more information on installing packages.
-
-Include in your `packages.yml`
-
+## Step 2: Install the package
+Include the following pardot_source package version in your `packages.yml` file.
+> TIP: Check [dbt Hub](https://hub.getdbt.com/) for the latest installation instructions or [read the dbt docs](https://docs.getdbt.com/docs/package-management) for more information on installing packages.
 ```yaml
 packages:
   - package: fivetran/pardot_source
     version: [">=0.5.0", "<0.6.0"]
 ```
-
-## Configuration
-
-### Source data location
-
-By default, this package will look for your Pardot data in the `pardot` schema of your [target database](https://docs.getdbt.com/docs/running-a-dbt-project/using-the-command-line-interface/configure-your-profile). If this is not where your Pardot data is, add the following configuration to your `dbt_project.yml` file:
+## Step 3: Define database and schema variables
+By default, this package runs using your destination and the `pardot` schema. If this is not where your Pardot data is (for example, if your Pardot schema is named `pardot_fivetran`), add the following configuration to your root `dbt_project.yml` file:
 
 ```yml
-# dbt_project.yml
-
-...
-config-version: 2
-
 vars:
   pardot_source:
     pardot_database: your_database_name
     pardot_schema: your_schema_name 
 ```
 
-### Passthrough Columns
-
-By default, the package includes all of the standard columns in the `stg_pardot__prospect` model. If you want to include custom columns, configure them using the `prospect_passthrough_columns` variable:
-
-```yml
-# dbt_project.yml
-
-...
-vars:
-  pardot_source:
-    prospect_passthrough_columns: ["custom_creative","custom_contact_state"]
-```
+## (Optional) Step 4: Additional configurations
+<details><summary>Expand to view configurations</summary>
 
 ### Changing the Build Schema
 By default this package will build the Pardot staging models within a schema titled (<target_schema> + `_stg_pardot`). If this is not where you would like your Pardot staging models to be written to, add the following configuration to your `dbt_project.yml` file:
 
 ```yml
-# dbt_project.yml
-
-...
 models:
   pardot_source:
     +schema: my_new_staging_models_schema # leave blank for just the target_schema
 ```
+### Passthrough Columns
+By default, the package includes all of the standard columns in the `stg_pardot__prospect` model. If you want to include custom columns, configure them using the `prospect_passthrough_columns` variable:
 
-## Database Support
-This package has been tested on BigQuery, Snowflake, Redshift, and Postgres.
+```yml
+vars:
+  pardot_source:
+    prospect_passthrough_columns: ["custom_creative","custom_contact_state"]
+```
 
-## Dependencies
+### Change the source table references
+If an individual source table has a different name than the package expects, add the table name as it appears in your destination to the respective variable:
+> IMPORTANT: See this project's [`dbt_project.yml`](https://github.com/fivetran/dbt_pardot_source/blob/main/dbt_project.yml) variable declarations to see the expected names.
+    
+```yml
+vars:
+    pardot_<default_source_table_name>_identifier: your_table_name 
+```
+</details>
+
+## (Optional) Step 5: Orchestrate your models with Fivetran Transformations for dbt Core™
+<details><summary>Expand to view details</summary>
+<br>
+    
+Fivetran offers the ability for you to orchestrate your dbt project through [Fivetran Transformations for dbt Core™](https://fivetran.com/docs/transformations/dbt). Learn how to set up your project for orchestration through Fivetran in our [Transformations for dbt Core™ setup guides](https://fivetran.com/docs/transformations/dbt#setupguide).
+</details>
+
+# 🔍 Does this package have dependencies?
 This dbt package is dependent on the following dbt packages. Please be aware that these dependencies are installed by default within this package. For more information on the following packages, refer to the [dbt hub](https://hub.getdbt.com/) site.
 > IMPORTANT: If you have any of these dependent packages in your own `packages.yml` file, we highly recommend that you remove them from your root `packages.yml` to avoid package version conflicts.
     
@@ -100,22 +94,16 @@ packages:
       version: [">=1.0.0", "<2.0.0"]
 ```
 
+# 🙌 How is this package maintained and can I contribute?
+## Package Maintenance
+The Fivetran team maintaining this package _only_ maintains the latest version of the package. We highly recommend that you stay consistent with the [latest version](https://hub.getdbt.com/fivetran/pardot_source/latest/) of the package and refer to the [CHANGELOG](https://github.com/fivetran/dbt_pardot_source/blob/main/CHANGELOG.md) and release notes for more information on changes across versions.
+
 ## Contributions
+A small team of analytics engineers at Fivetran develops these dbt packages. However, the packages are made better by community contributions! 
 
-Additional contributions to this package are very welcome! Please create issues
-or open PRs against `master`. Check out 
-[this post](https://discourse.getdbt.com/t/contributing-to-a-dbt-package/657) 
-on the best workflow for contributing to a package.
+We highly encourage and welcome contributions to this package. Check out [this dbt Discourse article](https://discourse.getdbt.com/t/contributing-to-a-dbt-package/657) to learn how to contribute to a dbt package!
 
-## Resources:
-- Provide [feedback](https://www.surveymonkey.com/r/DQ7K7WW) on our existing dbt packages or what you'd like to see next
-- Have questions, feedback, or need help? Book a time during our office hours [using Calendly](https://calendly.com/fivetran-solutions-team/fivetran-solutions-team-office-hours) or email us at solutions@fivetran.com
-- Find all of Fivetran's pre-built dbt packages in our [dbt hub](https://hub.getdbt.com/fivetran/)
-- Learn how to orchestrate your models with [Fivetran Transformations for dbt Core™](https://fivetran.com/docs/transformations/dbt)
-- Learn more about Fivetran overall [in our docs](https://fivetran.com/docs)
-- Check out [Fivetran's blog](https://fivetran.com/blog)
-- Learn more about dbt [in the dbt docs](https://docs.getdbt.com/docs/introduction)
-- Check out [Discourse](https://discourse.getdbt.com/) for commonly asked questions and answers
-- Join the [chat](http://slack.getdbt.com/) on Slack for live discussions and support
-- Find [dbt events](https://events.getdbt.com) near you
-- Check out [the dbt blog](https://blog.getdbt.com/) for the latest news on dbt's development and best practices
+# 🏪 Are there any resources available?
+- If you have questions or want to reach out for help, please refer to the [GitHub Issue](https://github.com/fivetran/dbt_pardot_source/issues/new/choose) section to find the right avenue of support for you.
+- If you would like to provide feedback to the dbt package team at Fivetran or would like to request a new dbt package, fill out our [Feedback Form](https://www.surveymonkey.com/r/DQ7K7WW).
+- Have questions or want to just say hi? Book a time during our office hours [on Calendly](https://calendly.com/fivetran-solutions-team/fivetran-solutions-team-office-hours) or email us at solutions@fivetran.com.

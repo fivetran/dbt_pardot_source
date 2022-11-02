@@ -9,6 +9,7 @@ sources:
 
     tables:
       - name: list
+        identifier: "{{ var('pardot_list_identifier', 'list')}}"
         description: Each record represents a list in Pardot.
         columns:
           - name: _fivetran_synced
@@ -33,6 +34,7 @@ sources:
             description: Last time list was updated
 
       - name: list_membership
+        identifier: "{{ var('pardot_list_membership_identifier', 'list_membership')}}"
         description: Every record represents membership of a prospect in a list.
         columns:
           - name: _fivetran_synced
@@ -51,6 +53,7 @@ sources:
             description: Last time that this membership was updated
 
       - name: prospect
+        identifier: "{{ var('pardot_prospect_identifier', 'prospect')}}"
         description: Each record in the table represents a prospect in Pardot.
         columns:
           - name: _fivetran_deleted
@@ -153,6 +156,7 @@ sources:
             description: Last time prospect was updated in Pardot; Time is reported in API user's preferred timezone
 
       - name: visitor
+        identifier: "{{ var('pardot_visitor_identifier', 'visitor')}}"
         description: Each record represents a website visitor.
         columns:
           - name: _fivetran_synced
@@ -183,6 +187,7 @@ sources:
             description: Last time visitor was updated in Pardot; Time is reported in API user's preferred timezone
 
       - name: visitor_activity
+        identifier: "{{ var('pardot_visitor_activity_identifier', 'visitor_activity')}}"
         description: Each record represents a visitors session on a website.
         columns:
           - name: _fivetran_synced
@@ -231,6 +236,7 @@ sources:
             description: Time that visitor activity occurred
 
       - name: opportunity
+        identifier: "{{ var('pardot_opportunity_identifier', 'opportunity')}}"
         description: Each record represents an opportunity in Pardot.
         columns:
           - name: _fivetran_synced
@@ -259,6 +265,7 @@ sources:
             description: Last time opportunity was updated in Pardot
 
       - name: opportunity_prospect
+        identifier: "{{ var('pardot_opportunity_prospect_identifier', 'opportunity_prospect')}}"
         description: Each record represents a prospect's involvement in an opportunity in Pardot.
         columns:
           - name: _fivetran_synced
@@ -271,6 +278,7 @@ sources:
             description: Last time record was updated in Pardot
 
       - name: campaign
+        identifier: "{{ var('pardot_campaign_identifier', 'campaign')}}"
         description: Each record represents a campaign in Pardot
         columns:
           - name: _fivetran_deleted

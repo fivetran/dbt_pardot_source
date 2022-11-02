@@ -3,15 +3,15 @@ version: '0.5.0'
 profile: 'integration_tests'
 config-version: 2
 vars:
-  pardot_schema: pardot_source_integration_tests
   pardot_source:
-    list: "{{ ref('pardot_list_data') }}"
-    list_membership: "{{ ref('pardot_list_membership_data') }}"
-    visitor: "{{ ref('pardot_visitor_data') }}"
-    visitor_activity: "{{ ref('pardot_visitor_activity_data') }}"
-    prospect: "{{ ref('pardot_prospect_data') }}"
-    campaign: "{{ ref('pardot_campaign_data') }}"
-    opportunity: "{{ ref('pardot_opportunity_data') }}"
-    opportunity_prospect: "{{ ref('pardot_opportunity_prospect_data') }}"
+    pardot_schema: pardot_source_integration_tests
+    pardot_list_identifier: "pardot_list_data"
+    pardot_list_membership_identifier: "pardot_list_membership_data"
+    pardot_visitor_identifier: "pardot_visitor_data"
+    pardot_visitor_activity_identifier: "pardot_visitor_activity_data"
+    pardot_prospect_identifier: "pardot_prospect_data"
+    pardot_campaign_identifier: "pardot_campaign_data"
+    pardot_opportunity_identifier: "pardot_opportunity_data"
+    pardot_opportunity_prospect_identifier: "pardot_opportunity_prospect_data"
 seeds:
   +quote_columns: "{{ true if target.type == 'redshift' else false }}"
