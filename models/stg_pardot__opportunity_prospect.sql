@@ -26,7 +26,7 @@ final as (
         prospect_id,
         updated_at as updated_timestamp,
         _fivetran_synced,
-        {{ dbt_utils.surrogate_key(['opportunity_id','prospect_id']) }} as opportunity_prospect_id
+        {{ dbt_utils.generate_surrogate_key(['opportunity_id','prospect_id']) }} as opportunity_prospect_id
     from fields
     
 )
