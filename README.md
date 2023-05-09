@@ -26,8 +26,8 @@ To use this dbt package, you must have the following:
 - At least one Fivetran Pardot connector syncing data into your destination. 
 - A **BigQuery**, **Snowflake**, **Redshift**, or **PostgreSQL** destination.
 
-## Step 2: Install the package
-Include the following pardot_source package version in your `packages.yml` file.
+## Step 2: Install the package (skip if also using the `pardot` transformation package)
+If you  are **not** using the [Pardot transformation package](https://github.com/fivetran/dbt_pardot), include the following package version in your `packages.yml` file. If you are installing the transform package, the source package is automatically installed as a dependency.
 > TIP: Check [dbt Hub](https://hub.getdbt.com/) for the latest installation instructions or [read the dbt docs](https://docs.getdbt.com/docs/package-management) for more information on installing packages.
 ```yaml
 packages:
