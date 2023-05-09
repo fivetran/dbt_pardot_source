@@ -1,3 +1,9 @@
+# dbt_pardot_source v0.UPDATE.UPDATE
+
+ ## Under the Hood:
+
+- Incorporated the new `fivetran_utils.drop_schemas_automation` macro into the end of each Buildkite integration test job.
+- Updated the pull request [templates](/.github).
 # dbt_pardot_source v0.5.0
 [PR #9](https://github.com/fivetran/dbt_pardot_source/pull/9) includes the following breaking changes:
 ## 🚨 Breaking Changes 🚨:
