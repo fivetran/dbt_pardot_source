@@ -1,9 +1,11 @@
-# dbt_pardot_source v0.UPDATE.UPDATE
+# dbt_pardot_source v0.6.0
+## 🎉 Feature Update 🎉
+- Databricks compatibility! ([#13](https://github.com/fivetran/dbt_pardot_source/pull/13))
 
- ## Under the Hood:
+## 🚘 Under the Hood 🚘
+- Incorporated the new `fivetran_utils.drop_schemas_automation` macro into the end of each Buildkite integration test job. ([#11](https://github.com/fivetran/dbt_pardot_source/pull/11))
+- Updated the pull request [templates](/.github). ([#11](https://github.com/fivetran/dbt_pardot_source/pull/11))
 
-- Incorporated the new `fivetran_utils.drop_schemas_automation` macro into the end of each Buildkite integration test job.
-- Updated the pull request [templates](/.github).
 # dbt_pardot_source v0.5.0
 [PR #9](https://github.com/fivetran/dbt_pardot_source/pull/9) includes the following breaking changes:
 ## 🚨 Breaking Changes 🚨:
