@@ -33,6 +33,7 @@ base_fields_renamed as (
         type as visitor_activity_type_id,
         type_name as event_type_name,
         prospect_id,
+        list_email_id,
         visitor_id,
         created_at as created_timestamp,
         campaign_id,
@@ -69,11 +70,12 @@ final as (
         
         /* foreign keys */
         campaign_id,
+        list_email_id,
         opportunity_id,
         prospect_id,
         visitor_id,
         visitor_activity_type_id,
-        email_id
+        email_id,
     
     from joined
 
