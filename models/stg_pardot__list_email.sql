@@ -30,7 +30,7 @@ final as (
         {% set list_email_name_parts = range(1, 9) %}
         
         {% for list_email_name_part in list_email_name_parts %}
-            null if(
+            nullif(
                 replace(
                     split_part(
                         replace(name, '(', ' - '), 
@@ -43,64 +43,72 @@ final as (
             ) as list_email_name_part_{{ list_email_name_part }},
         {% endfor %}
 
+        /* validate whether the email name has mmus formatting, defined: first split part of the name is a year on or after 2022 */    
+        case
+            when try_cast(list_email_name_part_1 as integer) >= 2022
+            then true
+            else false
+        end as is_mmus_formated_list_email_name,
+        case when list_email_name ilike any ('%test%') then true else false end as is_test,
 
-        /* search parts for segment keywords */
-        {% set list_email_name_segment_parts = range(4, 9) %}
-        case 
-            {% for list_email_name_segment_part in list_email_name_segment_parts %}
-            when {{list_email_name_segment_part}} 
-                ilike any (  
-                    '%all engaged%',
-                    '%emergency%',
-                    '%prospects%',
-                    '%active%',
-                    '%lapsed%',
-                    '%midlevel%',
-                    '%rai%',
-                    '%sustainers%',
-                    '%urgents%',
-                    '%ml%',
-                    '%daf%',
-                    '%planned%giving%',
-                    '%test%'
-                )
-            then {{list_email_name_segment_part}}
-            {% endfor %}
-            else null
-        end as keyword_found_list_segment,
+        /* derive list email type from split part 3 */
+        list_email_name_part_3 as list_email_name_part_type,
 
-
-        {% set keyword_mapping = {
-            '%all engaged%': 'All Engaged',
+        /* list email segment - special logic to extract conformed attribute from name */
+        {% set segment_keywords = {
+            '%all%engaged%': 'All Engaged',
             '%emergency%': 'Emergency',
-            '%prospects%': 'Prospects',
-            '%active%': 'Active',
-            '%lapsed%': 'Lapsed',
             '%midlevel%': 'Midlevel',
             '%ml%': 'Midlevel',
-            '%rai%': 'RAI',
+            'rai': 'RAI',
             '%sustainers%': 'Sustainers',
             '%urgents%': 'Urgents',
             '%daf%': 'DAF',
             '%planned%giving%': 'Planned Giving',
-            '%test%': 'Test'
         } %}
 
+        {% set status_keywords = {
+            '%prospects%': 'Prospects',
+            '%prospects%': 'Currents',
+            '%active%': 'Active',
+            '%lapsed%': 'Lapsed',
+        } %}
+
+        /* cleaned segment value extracted from list email name */
+        case
+        {% for keyword, cleaned_value in segment_keywords.items() %}
+            when list_email_name ilike '{{ keyword }}' then '{{ cleaned_value }}'
+        {% endfor %}
+            else null
+        end as list_email_keyword_found_segment,
+
+        /* in which parsed string,list_email_name_part_{{ list_email_name_part_number }}, the keyword is found */
         {% set list_email_name_segment_part_numbers = range(4, 9) %}
         case
-            {% for list_email_name_part_number in list_email_name_segment_part_numbers %}
-            when list_email_name_part_{{ list_email_name_part_number }} ilike any ({{ keyword_mapping.keys()|join(', ') }})
+            {%- for list_email_name_part_number in list_email_name_segment_part_numbers %}
+            when list_email_name_part_{{ list_email_name_part_number }} 
+                ilike any (
+                    {%- for keyword in segment_keywords.keys() %}
+                    '{{ keyword }}'{% if not loop.last %},{% endif %}
+                    {%- endfor -%}
+                )
             then list_email_name_part_{{ list_email_name_part_number }}
+            {%- endfor %}
+            else null
+        end as segment_keyword_found_string,
+
+       case
+            {% for list_email_name_part_number in list_email_name_segment_part_numbers %}
+            when list_email_name_part_{{ list_email_name_part_number }} 
+                ilike any (
+                    {%- for keyword in segment_keywords.keys() %}
+                    '{{ keyword }}'{% if not loop.last %},{% endif %}
+                    {%- endfor -%}
+                )
+            then 'list_email_name_part_{{ list_email_name_part_number }}'
             {% endfor %}
             else null
-        end as keyword_found_list_segment,
-
-{% for keyword, cleaned_value in keyword_mapping.items() %}
-case
-    when keyword_found_list_segment ilike {{ keyword }} then {{ cleaned_value }}
-    else null
-end as list_email_segment_conformed,
-{% endfor %}
+        end as segment_keyword_found_in_list_email_name_part,
 
         /* list email attributes */
         subject as list_email_subject,
