@@ -1,0 +1,16 @@
+version: 2
+
+sources:
+  - name: box__misc_mm
+    description: 'Production Raw data from Mass Market'
+    database: er_raw
+    schema: box__misc_mm
+    loader: fivetran
+    description: various MM files that have not yet been deemed to require a specific raw schema
+
+    tables: 
+      - name: pardot_mmus_list_emails_manual_records
+        description: Each record represents a list in Pardot.
+        columns:
+          - name: _fivetran_synced
+            description:  "{{ doc('_fivetran_synced') }}"
