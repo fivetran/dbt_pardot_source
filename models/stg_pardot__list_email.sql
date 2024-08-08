@@ -23,6 +23,8 @@ final as (
     
     select 
         id as list_email_id,
+        
+        /* basics */
         sent_at as list_email_sent_at,
         name as list_email_name,
 
@@ -42,7 +44,7 @@ final as (
                 '' 
             ) as list_email_name_part_{{ list_email_name_part }},
         {% endfor %}
-
+        
         /* validate whether the email name has mmus formatting, defined: first split part of the name is a year on or after 2022 */    
         case
             when try_cast(list_email_name_part_1 as integer) >= 2022
@@ -50,6 +52,42 @@ final as (
             else false
         end as is_mmus_formated_list_email_name,
         case when list_email_name ilike any ('%test%') then true else false end as is_test,
+
+        /* natural key */
+        /* cleans list email name month names and special characters to produce uniform coding in the style jan01a */
+        {% set month_abbreviations = {
+            'january': 'jan',
+            'february': 'feb',
+            'march': 'mar',
+            'april': 'apr',
+            'may': 'may',
+            'june': 'jun',
+            'july': 'jul',
+            'august': 'aug',
+            'september': 'sep',
+            'october': 'oct',
+            'november': 'nov',
+            'december': 'dec'
+        }
+        %}
+
+        case 
+            {% for month_full, month_abbreviated in month_abbreviations.items() %}
+            when list_email_name_part_2 ilike '%{{ month_full }}%' 
+                then regexp_replace(
+                    list_email_name_part_2,
+                    '{{ month_full }}', 
+                    '{{ month_abbreviated }}',
+                    1,0, 'ci')
+            {% endfor %}
+            else list_email_name_part_2
+        end as clean_month_names,
+        left(upper(regexp_replace(clean_month_names, '[# ]')),6) as list_email_name_internal_id,
+
+
+        list_email_name_part_1 as list_email_name_year,
+        list_email_name_year||list_email_name_internal_id as list_email_natural_key,
+
 
         /* derive list email type from split part 3 */
         list_email_name_part_3 as list_email_name_part_type,
@@ -74,15 +112,36 @@ final as (
             '%lapsed%': 'Lapsed',
         } %}
 
+        {% set type_keywords = {
+            '%fundraising%': 'Fundraising',
+            '%cultivation%': 'Cultivation',
+            '%advocacy%': 'Advocacy',
+            '%engagement%': 'Engagement'
+        } %}
+
         /* cleaned segment value extracted from list email name */
         case
-        {% for keyword, cleaned_value in segment_keywords.items() %}
-            when list_email_name ilike '{{ keyword }}' then '{{ cleaned_value }}'
+        {% for segment_keyword, segment_conformed in segment_keywords.items() %}
+            when list_email_name ilike '{{ segment_keyword }}' then '{{ segment_conformed }}'
         {% endfor %}
             else null
-        end as list_email_keyword_found_segment,
+        end as list_email_keyword_segment,
 
-        /* in which parsed string,list_email_name_part_{{ list_email_name_part_number }}, the keyword is found */
+        case
+        {% for status_keyword, status_conformed in status_keywords.items() %}
+            when list_email_name ilike '{{ status_keyword }}' then '{{ status_conformed }}'
+        {% endfor %}
+            else null
+        end as list_email_keyword_status,
+
+        case
+        {% for type_keyword, type_conformed in status_keywords.items() %}
+            when list_email_name ilike '{{ type_keyword }}' then '{{ type_conformed }}'
+        {% endfor %}
+            else null
+        end as list_email_keyword_type,
+
+        /* in which parsed string the keyword is found */
         {% set list_email_name_segment_part_numbers = range(4, 9) %}
         case
             {%- for list_email_name_part_number in list_email_name_segment_part_numbers %}
@@ -96,7 +155,8 @@ final as (
             {%- endfor %}
             else null
         end as segment_keyword_found_string,
-
+        
+        /* in which parsed name part the keyword is found */
        case
             {% for list_email_name_part_number in list_email_name_segment_part_numbers %}
             when list_email_name_part_{{ list_email_name_part_number }} 
