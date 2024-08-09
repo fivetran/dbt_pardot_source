@@ -90,7 +90,7 @@ final as (
 
 
         /* derive list email type from split part 3 */
-        list_email_name_part_3 as list_email_name_part_type,
+        list_email_name_part_4 as list_email_name_parsed_topic,
 
         /* list email segment - special logic to extract conformed attribute from name */
         {% set segment_keywords = {
@@ -135,7 +135,7 @@ final as (
         end as list_email_keyword_status,
 
         case
-        {% for type_keyword, type_conformed in status_keywords.items() %}
+        {% for type_keyword, type_conformed in type_keywords.items() %}
             when list_email_name ilike '{{ type_keyword }}' then '{{ type_conformed }}'
         {% endfor %}
             else null
