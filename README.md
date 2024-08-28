@@ -14,9 +14,9 @@
 
 ## What does this dbt package do?
 - Materializes [Pardot staging tables](https://fivetran.github.io/dbt_pardot_source/#!/overview/pardot_source/models/?g_v=1) which leverage data in the format described by [this ERD](https://fivetran.com/docs/applications/pardot/#schemainformation). These staging tables clean, test, and prepare your Pardot data from [Fivetran's connector](https://fivetran.com/docs/applications/pardot) for analysis by doing the following:
-- Name columns for consistency across all packages and for easier analysis
-- Adds freshness tests to source data
-- Adds column-level testing where applicable. For example, all primary keys are tested for uniqueness and non-null values.
+  - Name columns for consistency across all packages and for easier analysis
+  - Adds freshness tests to source data
+  - Adds column-level testing where applicable. For example, all primary keys are tested for uniqueness and non-null values.
 - Generates a comprehensive data dictionary of your Pardot data through the [dbt docs site](https://fivetran.github.io/dbt_pardot_source/).
 - These tables are designed to work simultaneously with our [Pardot transformation package](https://github.com/fivetran/dbt_pardot).
 
