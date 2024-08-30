@@ -8,6 +8,7 @@ models:
 vars:
   pardot_source:
     list: "{{ source('pardot','list') }}"
+    list_email: "{{ source('pardot','list_email') }}"
     list_membership: "{{ source('pardot','list_membership') }}"
     visitor: "{{ source('pardot','visitor') }}"
     visitor_activity: "{{ source('pardot','visitor_activity') }}"
