@@ -26,6 +26,7 @@ final as (
         id as campaign_id,
         name as campaign_name,
         cost,
+        salesforce_id as campaign_salesforce_id,
         _fivetran_deleted,
         _fivetran_synced
     from fields

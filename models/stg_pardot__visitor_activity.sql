@@ -1,4 +1,3 @@
-
 with base as (
 
     select * 
@@ -6,7 +5,14 @@ with base as (
 
 ),
 
-fields as (
+seed_event_types as (
+
+    select *
+    from {{ ref('seed__pardot__visitor_activity_types') }}
+
+),
+
+base_fields as (
 
     select
         {{
@@ -19,19 +25,60 @@ fields as (
     from base
 ),
 
-final as (
+
+base_fields_renamed as (
     
     select 
         id as visitor_activity_id,
+        type as visitor_activity_type_id,
         type_name as event_type_name,
         prospect_id,
+        list_email_id,
         visitor_id,
         created_at as created_timestamp,
         campaign_id,
         opportunity_id,
         _fivetran_synced,
         email_id
-    from fields
+    
+    from base_fields
+
+),
+
+joined as (
+    
+    select * 
+    from base_fields_renamed
+
+    left join seed_event_types using (visitor_activity_type_id)
+
+),
+
+final as (
+
+    select 
+        /* primary key */
+        visitor_activity_id,
+        
+        /* core attributes */
+        visitor_activity_type,
+        event_type_name,
+        created_timestamp,
+        
+        /* timestamps */
+        _fivetran_synced,
+        
+        /* foreign keys */
+        campaign_id,
+        list_email_id,
+        opportunity_id,
+        prospect_id,
+        visitor_id,
+        visitor_activity_type_id,
+        email_id,
+    
+    from joined
+
 )
 
 select * from final

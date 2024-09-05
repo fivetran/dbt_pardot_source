@@ -6,6 +6,7 @@ vars:
   pardot_source:
     pardot_schema: pardot_source_integration_tests
     pardot_list_identifier: "pardot_list_data"
+    pardot_list_email_identifier: "pardot_list_email_data"
     pardot_list_membership_identifier: "pardot_list_membership_data"
     pardot_visitor_identifier: "pardot_visitor_data"
     pardot_visitor_activity_identifier: "pardot_visitor_activity_data"

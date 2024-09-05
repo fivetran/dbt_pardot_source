@@ -33,6 +33,13 @@ sources:
           - name: updated_at
             description: Last time list was updated
 
+      - name: list_email
+        identifier: "{{ var('pardot_list_email_identifier', 'list_email')}}"
+        description: Each record represents a list being sent an email in Pardot.
+        columns:
+          - name: id
+            description: Pardot ID of this list-email
+
       - name: list_membership
         identifier: "{{ var('pardot_list_membership_identifier', 'list_membership')}}"
         description: Every record represents membership of a prospect in a list.

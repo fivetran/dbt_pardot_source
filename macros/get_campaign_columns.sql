@@ -5,6 +5,7 @@
     {"name": "_fivetran_synced", "datatype": dbt.type_timestamp()},
     {"name": "cost", "datatype": dbt.type_int()},
     {"name": "id", "datatype": dbt.type_int()},
+    {"name": "salesforce_id", "datatype": dbt.type_string()},
     {"name": "name", "datatype": dbt.type_string()}
 ] %}
 
