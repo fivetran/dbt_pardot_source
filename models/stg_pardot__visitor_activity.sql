@@ -29,6 +29,11 @@ base_fields as (
 base_fields_renamed as (
     
     select 
+        {{generate_surrograte_key('_dbt_source_relation','id')}} as visitor_activity_surrogate_key,
+        
+        _dbt_source_relation,
+        parse_business_unit_from_schema('_dbt_source_relation') as pardot_business_unit_abbreviation,
+        
         id as visitor_activity_id,
         type as visitor_activity_type_id,
         type_name as event_type_name,

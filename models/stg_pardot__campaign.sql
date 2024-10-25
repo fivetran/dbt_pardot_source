@@ -23,7 +23,7 @@ fields as (
 final as (
     
     select 
-        {{generate_surrograte_key('_dbt_source_relation','id')}} as campaign_surrogate_key
+        {{generate_surrograte_key('_dbt_source_relation','id')}} as campaign_surrogate_key,
         
         _dbt_source_relation,
         parse_business_unit_from_schema('_dbt_source_relation') as pardot_business_unit_abbreviation,
