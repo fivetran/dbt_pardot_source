@@ -23,6 +23,8 @@ fields as (
 final as (
     
     select 
+        _dbt_source_relation,
+        parse_business_unit_from_schema(_dbt_source_relation) as pardot_business_unit_abbreviation,
         id as campaign_id,
         name as campaign_name,
         cost,
