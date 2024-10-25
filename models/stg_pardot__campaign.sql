@@ -23,12 +23,17 @@ fields as (
 final as (
     
     select 
+        {{generate_surrograte_key('_dbt_source_relation','id')}} as campaign_surrogate_key
+        
         _dbt_source_relation,
-        parse_business_unit_from_schema(_dbt_source_relation) as pardot_business_unit_abbreviation,
-        id as campaign_id,
+        parse_business_unit_from_schema('_dbt_source_relation') as pardot_business_unit_abbreviation,
+        
         name as campaign_name,
         cost,
+        
+        id as campaign_id,
         salesforce_id as campaign_salesforce_id,
+        
         _fivetran_deleted,
         _fivetran_synced
     from fields
