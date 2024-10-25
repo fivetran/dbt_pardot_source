@@ -26,13 +26,17 @@ final as (
         /* primary key, schema specific id, schema id, extracted business unit */
         {{generate_pardot_identifiers('id')}}
         
+        /* attributes */
         name as campaign_name,
         cost,
         
-        salesforce_id as campaign_salesforce_id,
-        
+        /* timestamps */
         _fivetran_deleted,
-        _fivetran_synced
+        _fivetran_synced,
+        
+        /* foreign keys */
+        salesforce_id as campaign_salesforce_id
+        
     from fields
 )
 

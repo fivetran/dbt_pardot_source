@@ -24,6 +24,7 @@ final as (
         /* primary key, schema specific id, schema id, extracted business unit */
         {{generate_pardot_identifiers('id')}}
         
+        /* attributes */
         name,
         description,
         title,
@@ -31,10 +32,11 @@ final as (
         is_public,
         is_dynamic,
         
+        /* timestamps */
         created_at as created_timestamp,
         updated_at as updated_timestamp,
         _fivetran_synced
-        
+
     from fields
 
 )

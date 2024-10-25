@@ -180,6 +180,7 @@ final as (
         is_paused as is_paused_list_email,
         is_sent as is_sent_list_email,
 
+        /* timestamps */
         created_at as created_timestamp,
         updated_at as updated_timestamp,
         _fivetran_synced

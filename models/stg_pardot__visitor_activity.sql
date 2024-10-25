@@ -63,12 +63,17 @@ final as (
         visitor_activity_id,
         
         /* core attributes */
+        pardot_business_unit_abbreviation
         visitor_activity_type,
         event_type_name,
         created_timestamp,
         
         /* timestamps */
         _fivetran_synced,
+        
+        /* post-union identifiers */
+        _dbt_source_relation,
+        visitor_activity_schema_specific_id,
         
         /* foreign keys */
         campaign_id,
@@ -77,7 +82,7 @@ final as (
         prospect_id,
         visitor_id,
         visitor_activity_type_id,
-        email_id,
+        email_id
     
     from joined
 
