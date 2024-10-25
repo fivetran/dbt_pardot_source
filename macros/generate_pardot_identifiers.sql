@@ -3,7 +3,7 @@
 --renames the original primary key as [model]_schema_specific_id 
 {% macro generate_pardot_identifiers(pre_union_primary_key, model_name=none) %}
 
-    {% set model = model_name if model_name else this.name %}
+    {% set model = model_name if model_name else this.name.split('__')[-1] %}
 
     {{ dbt_utils.generate_surrogate_key(['_dbt_source_relation', pre_union_primary_key]) }} as {{ model }}_id,
     _dbt_source_relation,
@@ -18,6 +18,6 @@
         ),
         '_',
         ' '
-    ) as pardot_business_unit_abbreviation
+    ) as pardot_business_unit_abbreviation,
 
 {% endmacro %}
