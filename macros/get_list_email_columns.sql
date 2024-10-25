@@ -1,6 +1,7 @@
 {% macro get_list_email_columns() %}
 
 {% set columns = [
+    {"name": "_dbt_source_relation", "datatype": dbt.type_string()},
     {"name": "id", "datatype": dbt.type_int()},
     {"name": "name", "datatype": dbt.type_string()},
     {"name": "subject", "datatype": dbt.type_string()},

@@ -22,6 +22,16 @@ fields as (
 final as (
     
     select 
+        _dbt_source_relation,
+        REGEXP_REPLACE(
+            REGEXP_REPLACE(
+                REGEXP_SUBSTR(_dbt_source_relation, 'PARDOT_(_?\\w+)', 1, 1, 'i', 1),
+                '^_',
+                ''
+            ),
+            '_',
+            ' '
+        ) as pardot_business_unit_abbreviation,
         id as list_email_id,
         
         /* basics */
