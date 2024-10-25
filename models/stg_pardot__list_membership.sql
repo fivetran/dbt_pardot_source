@@ -34,8 +34,8 @@ final as (
         _fivetran_synced,
 
         /* foreign keys */
-        prospect_id,
-        list_id
+        {{generate_pardot_surrogate_key('prospect_id') as prospect_id,
+        {{generate_pardot_surrogate_key('list_id') as list_id
         
     from fields
 )

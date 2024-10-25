@@ -40,7 +40,8 @@ final as (
         closed_at as closed_timestamp,
         
         /* foreign keys */
-        campaign_id
+        {{ generate_pardot_surrogate_key('campaign_id') }} as campaign_id
+        
 
     from fields
 

@@ -79,10 +79,12 @@ final as (
         _fivetran_deleted,
         _fivetran_synced,
         
-        /* foreign keys */
-        campaign_id,
-        prospect_account_id,
-        user_id,
+        /* pardot foreign keys */
+        {{ generate_pardot_surrogate_key('campaign_id') }} as campaign_id,
+        {{ generate_pardot_surrogate_key('prospect_account_id') }} as prospect_account_id,
+        {{ generate_pardot_surrogate_key('campaign_id') }} as user_id,
+
+        /* salesforce foreign keys */
         crm_account_fid,
         crm_contact_fid,
         crm_lead_fid,

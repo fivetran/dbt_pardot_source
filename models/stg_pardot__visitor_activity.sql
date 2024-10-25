@@ -76,13 +76,13 @@ final as (
         visitor_activity_schema_specific_id,
         
         /* foreign keys */
-        campaign_id,
-        list_email_id,
-        opportunity_id,
-        prospect_id,
-        visitor_id,
-        visitor_activity_type_id,
-        email_id
+        {{ generate_pardot_surrogate_key('campaign_id') }} as campaign_id,
+        {{ generate_pardot_surrogate_key('list_email_id') }} as list_email_id,
+        {{ generate_pardot_surrogate_key('opportunity_id') }} as opportunity_id,
+        {{ generate_pardot_surrogate_key('prospect_id') }} as prospect_id,
+        {{ generate_pardot_surrogate_key('visitor_id') }} as visitor_id,
+        {{ generate_pardot_surrogate_key('visitor_activity_type_id') }} as visitor_activity_type_id,
+        {{ generate_pardot_surrogate_key('email_id') }} as email_id
     
     from joined
 

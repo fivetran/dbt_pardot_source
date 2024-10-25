@@ -33,8 +33,9 @@ final as (
         _fivetran_synced,
 
         /* foreign_keys */
-        opportunity_id,
-        prospect_id
+        {{ generate_pardot_surrogate_key('opportunity_id') }} as opportunity_id,
+        {{ generate_pardot_surrogate_key('prospect_id') }} as prospect_id
+        
     from fields
     
 )
