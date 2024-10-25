@@ -4,3 +4,6 @@ dbt_modules/
 logs/
 
 dbt_packages/
+
+dbt-env/
+dbt-env-setup/
