@@ -22,10 +22,8 @@ fields as (
 final as (
     
     select 
-        {{generate_surrograte_key('_dbt_source_relation','id')}} as opportunity_surrogate_key,
-        
-        _dbt_source_relation,
-        {{parse_business_unit_from_schema('_dbt_source_relation')}} as pardot_business_unit_abbreviation,
+        /* primary key, schema specific id, schema id, extracted business unit */
+        {{generate_pardot_identifiers('id')}}
         
         probability,
         status as opportunity_status,
@@ -36,9 +34,8 @@ final as (
         created_at as created_timestamp,
         updated_at as updated_timestamp,
         _fivetran_synced,
-        closed_at as closed_timestamp
+        closed_at as closed_timestamp,
         
-        id as opportunity_id,
         campaign_id,
         name as opportunity_name
     from fields

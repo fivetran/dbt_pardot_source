@@ -27,12 +27,9 @@ fields as (
 final as (
     
     select 
-        {{generate_surrograte_key('_dbt_source_relation','id')}} as prospect_surrogate_key,
+        /* primary key, schema specific id, schema id, extracted business unit */
+        {{generate_pardot_identifiers('id')}}
         
-        _dbt_source_relation,
-        {{parse_business_unit_from_schema('_dbt_source_relation')}} as pardot_business_unit_abbreviation,
-        
-        id as prospect_id,
         _fivetran_deleted,
         _fivetran_synced,
         address_one,

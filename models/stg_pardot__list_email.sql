@@ -22,10 +22,8 @@ fields as (
 final as (
     
     select 
-        {{generate_surrograte_key('_dbt_source_relation','id')}} as list_email_surrogate_key,
-        
-        _dbt_source_relation,
-        parse_business_unit_from_schema(_dbt_source_relation) as pardot_business_unit_abbreviation,
+        /* primary key, schema specific id, schema id, extracted business unit */
+        {{generate_pardot_identifiers('id')}}
         
         /* basics */
         sent_at as list_email_sent_at,
@@ -184,9 +182,7 @@ final as (
 
         created_at as created_timestamp,
         updated_at as updated_timestamp,
-        _fivetran_synced,
-        
-        id as list_email_id
+        _fivetran_synced
     
     from fields
 

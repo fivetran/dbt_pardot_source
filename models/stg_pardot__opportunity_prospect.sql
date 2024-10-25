@@ -22,16 +22,17 @@ fields as (
 final as (
     
     select 
-        {{generate_surrograte_key('_dbt_source_relation','opportunity_id','prospect_id')}} as list_membership_surrogate_key,
+        /* generate primary key; table doesn't have one */
+        {{ dbt_utils.generate_surrogate_key(['opportunity_id','prospect_id']) }} as id,
         
-        _dbt_source_relation,
-        {{parse_business_unit_from_schema('_dbt_source_relation')}} as pardot_business_unit_abbreviation,
+        /* primary key, schema specific id, schema id, extracted business unit */
+        {{generate_pardot_identifiers('id')}}
         
-        opportunity_id,
-        prospect_id,
         updated_at as updated_timestamp,
         _fivetran_synced,
-        {{ dbt_utils.generate_surrogate_key(['opportunity_id','prospect_id']) }} as opportunity_prospect_id
+
+        opportunity_id,
+        prospect_id
     from fields
     
 )
