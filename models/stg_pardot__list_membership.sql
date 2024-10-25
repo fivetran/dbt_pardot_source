@@ -22,12 +22,19 @@ fields as (
 final as (
     
     select 
+        {{generate_surrograte_key('_dbt_source_relation','id')}} as list_membership_surrogate_key,
+        
+        _dbt_source_relation,
+        {{parse_business_unit_from_schema('_dbt_source_relation')}} as pardot_business_unit_abbreviation,
+        
+        opted_out as has_opted_out,
+        
         id as list_membership_id,
         prospect_id,
         list_id,
+        
         created_at as created_timestamp,
         updated_at as updated_timestamp,
-        opted_out as has_opted_out,
         _fivetran_synced
     from fields
 )
