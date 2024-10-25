@@ -1,4 +1,4 @@
-{% macro parse_business_unit_from_schema('_dbt_source_relation') %}
+{% macro parse_business_unit_from_schema(_dbt_source_relation) %}
 
 REGEXP_REPLACE(
     REGEXP_REPLACE(
