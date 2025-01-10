@@ -23,7 +23,7 @@
 ## How do I use the dbt package?
 ### Step 1: Prerequisites
 To use this dbt package, you must have the following:
-- At least one Fivetran Pardot connector syncing data into your destination.
+- At least one Fivetran Pardot connection syncing data into your destination.
 - A **BigQuery**, **Snowflake**, **Redshift**, **PostgreSQL**, or **Databricks** destination.
 
 ### Step 2: Install the package (skip if also using the `pardot` transformation package)
