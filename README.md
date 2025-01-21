@@ -1,4 +1,6 @@
-<p align="center">
+# Pardot Source dbt Package ([Docs](https://fivetran.github.io/dbt_pardot_source/))
+
+<p align="left">
     <a alt="License"
         href="https://github.com/fivetran/dbt_pardot_source/blob/main/LICENSE">
         <img src="https://img.shields.io/badge/License-Apache%202.0-blue.svg" /></a>
@@ -9,8 +11,6 @@
     <a alt="PRs">
         <img src="https://img.shields.io/badge/Contributions-welcome-blueviolet" /></a>
 </p>
-
-# Pardot Source dbt Package ([Docs](https://fivetran.github.io/dbt_pardot_source/))
 
 ## What does this dbt package do?
 - Materializes [Pardot staging tables](https://fivetran.github.io/dbt_pardot_source/#!/overview/pardot_source/models/?g_v=1) which leverage data in the format described by [this ERD](https://fivetran.com/docs/applications/pardot/#schemainformation). These staging tables clean, test, and prepare your Pardot data from [Fivetran's connector](https://fivetran.com/docs/applications/pardot) for analysis by doing the following:
