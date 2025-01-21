@@ -1,3 +1,8 @@
+# dbt_pardot_source version.version
+
+## Documentation
+- Corrected references to connectors and connections in the README. ([#19](https://github.com/fivetran/dbt_pardot_source/pull/19))
+
 # dbt_pardot_source v0.6.0
 ## 🎉 Feature Update 🎉
 - Databricks compatibility! ([#13](https://github.com/fivetran/dbt_pardot_source/pull/13))
